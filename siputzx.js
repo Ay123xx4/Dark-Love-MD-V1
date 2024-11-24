@@ -670,12 +670,25 @@ m?.reply("URL Yang Diberikan Tidak Mendukung Video Atau Gambar.")
 }}
 break;
 //=================================================//
-case "ai":{
-if (!text) return m?.reply("Mau Nanya Apa Sama Adel")
-let { data } = await axios.get("https://www.putz.my.id/api/ai?type=hercai&q=" + text)
-m?.reply(data.result)
+ case "ai": {
+if (!text) return m.reply("Masukan text!")
+let prompt = "Nama kamu adalah Shyzu" // Isi prompt AI kamu disini
+try {
+  let { data } = await axios({
+    "method": "GET",
+    "url": "https://mannoffc-x.hf.space/ai/prompt",
+    "params": {
+      "prompt": prompt,
+      "message": text
+    }
+  })
+  m.reply(data.result);
+} catch (e) {
+  m.reply(e.message);
+  console.log(e);
 }
-break
+}
+break;
 //=================================================//
 case 'pin': case 'pinterest':{
 if (!text) return m?.reply(`Contoh: ${prefix + command} Adel JKT48`)
